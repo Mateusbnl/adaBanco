@@ -1,5 +1,7 @@
 package conta;
 
+import usuario.Usuario;
+
 public interface ContaCorrente extends Conta{
-    boolean investimento();
+    void investimento(Double valor, Usuario usuarioOrigem, Usuario usuarioDestino);
 }
