@@ -7,14 +7,23 @@ import usuario.Usuario;
 
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class ContaBase implements Conta {
-    private int Id;
+    private int id;
     protected List<Acao> historicoDeAcoes;
     private Date dataDeAtualizacao;
     private StatusContaEnum statusConta;
     private BigInteger idUsuario;
+
+    public ContaBase(int id, BigInteger idUsuario){
+        this.id= id;
+        this.historicoDeAcoes = new LinkedList<>();
+        this.dataDeAtualizacao = new Date();
+        this.statusConta = StatusContaEnum.ATIVA;
+        this.idUsuario = idUsuario;
+    }
 
     public void saque(Double valorSaque, Usuario usuarioOrigem, Usuario usuarioDestino) {
         historicoDeAcoes.add(new Acao(new Date(),'D',valorSaque,valorSaque,usuarioOrigem,usuarioDestino,"Saque"));
