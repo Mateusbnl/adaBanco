@@ -25,12 +25,12 @@ public abstract class ContaBase implements Conta {
         this.idUsuario = idUsuario;
     }
 
-    public void saque(Double valorSaque, Usuario usuarioOrigem, Usuario usuarioDestino) {
-        historicoDeAcoes.add(new Acao(new Date(),'D',valorSaque,valorSaque,usuarioOrigem,usuarioDestino,"Saque"));
+    public void saque(Double valorSaque, Usuario usuarioOrigem, Usuario usuarioDestino,String obs) {
+        historicoDeAcoes.add(new Acao(new Date(),'D',valorSaque,valorSaque,usuarioOrigem,usuarioDestino,obs));
     }
 
-    public void deposito(Double valorSaque,Usuario usuarioOrigem, Usuario usuarioDestino) {
-        historicoDeAcoes.add(new Acao(new Date(),'C',valorSaque,valorSaque,usuarioOrigem,usuarioDestino,"Deposito"));
+    public void deposito(Double valorSaque,Usuario usuarioOrigem, Usuario usuarioDestino,String obs) {
+        historicoDeAcoes.add(new Acao(new Date(),'C',valorSaque,valorSaque,usuarioOrigem,usuarioDestino,obs));
     }
 
     public void transferir(Double valorSaque, Usuario usuarioOrigem, Usuario usuarioDestino) {

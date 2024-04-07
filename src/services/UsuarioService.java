@@ -1,28 +1,26 @@
 package services;
 
 import conta.Conta;
-import conta.impl.ContaCorrenteImpl;
-import enums.ClassificaoEnum;
+import enums.ClassificacaoEnum;
 import usuario.Usuario;
 import usuario.impl.UsuarioPF;
 import usuario.impl.UsuarioPJ;
 
 import java.math.BigInteger;
-import java.util.Random;
 
 public class UsuarioService {
     //TODO - retirar id, provisorio para testes e na proxima evolucao retirar
     //TODO - TALVEZ criar factory para criacao de Usuarios
-    public static Usuario criarUsuario(BigInteger idUsuario, ClassificaoEnum classificacao, String nome){
+    public static Usuario criarUsuario(BigInteger idUsuario, ClassificacaoEnum classificacao, String nome){
         Usuario novoUsuario;
         Conta contaCorrente;
-        if(classificacao.equals(ClassificaoEnum.PF)){
+        if(classificacao.equals(ClassificacaoEnum.PF)){
             contaCorrente = ContaService.criarContaCorrente(1,idUsuario);
             novoUsuario = new UsuarioPF(idUsuario,classificacao,nome);
             novoUsuario.addConta(contaCorrente);
             return novoUsuario;
         }
-        if(classificacao.equals(ClassificaoEnum.PJ)){
+        if(classificacao.equals(ClassificacaoEnum.PJ)){
             contaCorrente = ContaService.criarContaCorrente(1,idUsuario);
             novoUsuario = new UsuarioPJ(idUsuario,classificacao,nome);
             novoUsuario.addConta(contaCorrente);
