@@ -13,4 +13,5 @@ public interface Conta {
     List<Acao> getHistoricoDeAcoes();
     double saldo();
     int getId();
+
 }

@@ -5,8 +5,8 @@ import usuario.Usuario;
 
 public class CreditoService {
     //TODO - criar classes ValueObject para diminuir a quantidade de parametros
-    public static void realizarCredito(Conta contaDestino, Double valorCredito, Usuario usuarioOrigem, Usuario usuarioDestino){
+    public static void realizarCredito(Conta contaDestino, Double valorCredito, Usuario usuarioOrigem, Usuario usuarioDestino, String obs){
         //TODO - Sera implementado um array de Validadores para garantir a consistencia do deposito (CONTA ATIVA, VALIDA, ETC)
-        contaDestino.deposito(valorCredito,usuarioOrigem,usuarioDestino, "Deposito");
+        contaDestino.deposito(valorCredito,usuarioOrigem,usuarioDestino, obs);
     }
 }

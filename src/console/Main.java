@@ -3,24 +3,27 @@ package console;
 import enums.ClassificacaoEnum;
 import services.CreditoService;
 import services.DebitoService;
+import services.InvestimentoService;
 import services.UsuarioService;
 import usuario.Usuario;
 
 import java.math.BigInteger;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args){
         //Cria usuario e Conta Corrente conforme regra de negocio
-        Usuario usuario = UsuarioService.criarUsuario(BigInteger.valueOf(6081970418L), ClassificacaoEnum.PJ,"Mateus Lucena");
+        Usuario usuario = UsuarioService.criarUsuario(BigInteger.valueOf(81970418000120L), ClassificacaoEnum.PJ,"Mateus LTDA");
         Usuario usuario2 = UsuarioService.criarUsuario(BigInteger.valueOf(12345678911L), ClassificacaoEnum.PF,"Marcio Greyck");
 
         //Checa saldo da Conta Criada para o novo usuario
         System.out.println("Saldo da nova Conta do novo Usuario: "+ UsuarioService.retornaContaDeUsuarioPorId(usuario,1).saldo());
 
         //Realiza deposito na conta do usuario
-        CreditoService.realizarCredito(UsuarioService.retornaContaDeUsuarioPorId(usuario,1),1000.00,usuario,usuario);
-        CreditoService.realizarCredito(UsuarioService.retornaContaDeUsuarioPorId(usuario,1),2000.00,usuario2,usuario);
+        CreditoService.realizarCredito(UsuarioService.retornaContaDeUsuarioPorId(usuario,1),1000.00,usuario,usuario,"Deposito");
+        CreditoService.realizarCredito(UsuarioService.retornaContaDeUsuarioPorId(usuario,1),2000.00,usuario2,usuario,"Deposito");
 
         //Checa Novo saldo
         System.out.println("Saldo da nova Conta do "+ usuario.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario,1).saldo());
@@ -40,6 +43,23 @@ public class Main {
         System.out.println("Saldo da nova Conta do "+ usuario.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario,1).getHistoricoDeAcoes());
         System.out.println("Saldo da nova Conta do "+ usuario2.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario2,1).getHistoricoDeAcoes());
 
+        //Realizar Investimentos
+        DebitoService.realizarDebitoInvestimento(UsuarioService.retornaContaDeUsuarioPorId(usuario,1),1000.00,usuario,usuario);
+        DebitoService.realizarDebitoInvestimento(UsuarioService.retornaContaDeUsuarioPorId(usuario2,1),1000.00,usuario2,usuario2);
 
-        System.out.println("executando codigo"); }
+        //Extratos Conta Investimento
+        System.out.println("Saldo da nova Conta de Investimento do  "+ usuario.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario,2).getHistoricoDeAcoes());
+        System.out.println("Saldo da nova Conta de Investimento do "+ usuario2.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario2,2).getHistoricoDeAcoes());
+
+        //Gerar Rendimentos
+        List<Usuario> listaUsuarios = new LinkedList<Usuario>();
+        listaUsuarios.add(usuario);
+        listaUsuarios.add(usuario2);
+        InvestimentoService.gerarRendimento(listaUsuarios);
+
+        //Saldos Conta Investimento
+        System.out.println("Saldo da nova Conta do "+ usuario.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario,2).saldo());
+        System.out.println("Saldo da nova Conta do "+ usuario2.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario2,2).saldo());
+
+    }
 }
