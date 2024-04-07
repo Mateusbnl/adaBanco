@@ -69,4 +69,12 @@ public abstract class UsuarioBase implements Usuario {
         this.statusUsuario = statusUsuario;
     }
 
+    public Conta getContaInvestimento(){
+        for(Conta conta : this.getContas()){
+            if(conta.getClass().getCanonicalName().endsWith("ContaInvestimentoImpl"))
+                return conta;
+        }
+        return null;
+    }
+
 }

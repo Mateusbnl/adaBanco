@@ -17,4 +17,17 @@ public class DebitoService {
         }
         return false;
     }
+
+    public static boolean realizarDebitoInvestimento(Conta contaOrigem, Double valorDebito, Usuario usuarioOrigem, Usuario usuarioDestino){
+        if(ValidadorSaldo.validaSaldo(contaOrigem.saldo(), valorDebito)){
+            if(usuarioDestino.getContaInvestimento() == null){
+                usuarioDestino.addConta(ContaService.criarContaInvestimento(2,usuarioDestino.getId()));
+            }
+            System.out.println(usuarioDestino.getContaInvestimento());
+            contaOrigem.saque(valorDebito,usuarioOrigem,usuarioDestino,"Debito Investimento");
+            usuarioDestino.getContaInvestimento().deposito(valorDebito,usuarioOrigem,usuarioDestino,"Credito Investimento");
+            return true;
+        }
+        return false;
+    }
 }
