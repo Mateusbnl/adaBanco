@@ -1,8 +1,6 @@
 package console;
 
-import conta.Conta;
-import enums.ClassificaoEnum;
-import services.ContaService;
+import enums.ClassificacaoEnum;
 import services.CreditoService;
 import services.DebitoService;
 import services.UsuarioService;
@@ -14,8 +12,8 @@ public class Main {
 
     public static void main(String[] args){
         //Cria usuario e Conta Corrente conforme regra de negocio
-        Usuario usuario = UsuarioService.criarUsuario(BigInteger.valueOf(6081970418L), ClassificaoEnum.PF,"Mateus Lucena");
-        Usuario usuario2 = UsuarioService.criarUsuario(BigInteger.valueOf(12345678911L), ClassificaoEnum.PF,"Marcio Greyck");
+        Usuario usuario = UsuarioService.criarUsuario(BigInteger.valueOf(6081970418L), ClassificacaoEnum.PJ,"Mateus Lucena");
+        Usuario usuario2 = UsuarioService.criarUsuario(BigInteger.valueOf(12345678911L), ClassificacaoEnum.PF,"Marcio Greyck");
 
         //Checa saldo da Conta Criada para o novo usuario
         System.out.println("Saldo da nova Conta do novo Usuario: "+ UsuarioService.retornaContaDeUsuarioPorId(usuario,1).saldo());
@@ -36,7 +34,11 @@ public class Main {
 
         //Checa Novo saldo
         System.out.println("Saldo da nova Conta do "+ usuario.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario,1).saldo());
-        System.out.println("Saldo da nova Conta do "+ usuario2.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario,1).saldo());
+        System.out.println("Saldo da nova Conta do "+ usuario2.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario2,1).saldo());
+
+        //Extratos
+        System.out.println("Saldo da nova Conta do "+ usuario.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario,1).getHistoricoDeAcoes());
+        System.out.println("Saldo da nova Conta do "+ usuario2.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario2,1).getHistoricoDeAcoes());
 
 
         System.out.println("executando codigo"); }

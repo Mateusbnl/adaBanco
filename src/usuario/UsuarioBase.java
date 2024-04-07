@@ -1,6 +1,6 @@
 package usuario;
 import conta.Conta;
-import enums.ClassificaoEnum;
+import enums.ClassificacaoEnum;
 import enums.StatusUsuarioEnum;
 
 import java.math.BigInteger;
@@ -10,13 +10,13 @@ import java.util.List;
 
 public abstract class UsuarioBase implements Usuario {
     protected BigInteger id;
-    protected ClassificaoEnum classificacao;
+    protected ClassificacaoEnum classificacao;
     protected String nome;
     protected Date dataCadastro;
     protected List<Conta> contas;
     protected StatusUsuarioEnum statusUsuario;
 
-    public UsuarioBase(BigInteger id, ClassificaoEnum classificacao, String nome){
+    public UsuarioBase(BigInteger id, ClassificacaoEnum classificacao, String nome){
         this.id = id;
         this.classificacao = classificacao;
         this.nome = nome;
@@ -37,11 +37,11 @@ public abstract class UsuarioBase implements Usuario {
         this.id = id;
     }
 
-    public ClassificaoEnum getClassificacao() {
+    public ClassificacaoEnum getClassificacao() {
         return classificacao;
     }
 
-    public void setClassificacao(ClassificaoEnum classificacao) {
+    public void setClassificacao(ClassificacaoEnum classificacao) {
         this.classificacao = classificacao;
     }
 
