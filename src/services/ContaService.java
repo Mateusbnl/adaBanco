@@ -17,7 +17,9 @@ public class ContaService {
         return new ContaPoupancaImpl(id,idUsuario);
     }
 
-    public static Conta criarContaInvestimento(int id, BigInteger idUsuario){
-        return new ContaInvestimentoImpl(id,idUsuario);
+    public static Conta criarContaInvestimento(int id, BigInteger idUsuario){ return new ContaInvestimentoImpl(id,idUsuario); }
+
+    public static Double consultaSaldo(Conta conta){
+        return conta.saldo();
     }
 }

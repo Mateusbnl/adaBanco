@@ -29,7 +29,7 @@ public abstract class ContaBase implements Conta {
         historicoDeAcoes.add(new Acao(new Date(),'D',valorSaque,valorSaque,usuarioOrigem,usuarioDestino,"Saque"));
     }
 
-    public void deposito(Double valorSaque, Usuario usuarioOrigem, Usuario usuarioDestino) {
+    public void deposito(Double valorSaque,Usuario usuarioOrigem, Usuario usuarioDestino) {
         historicoDeAcoes.add(new Acao(new Date(),'C',valorSaque,valorSaque,usuarioOrigem,usuarioDestino,"Deposito"));
     }
 
@@ -37,7 +37,28 @@ public abstract class ContaBase implements Conta {
         historicoDeAcoes.add(new Acao(new Date(),'D',valorSaque,valorSaque,usuarioOrigem,usuarioDestino,"Debito para Transferencia"));
     }
 
-    public Double saldo(){
+    public int getId() {
+        return id;
+    }
+
+    public List<Acao> getHistoricoDeAcoes() {
+        return historicoDeAcoes;
+    }
+
+    public Date getDataDeAtualizacao() {
+        return dataDeAtualizacao;
+    }
+
+    public StatusContaEnum getStatusConta() {
+        return statusConta;
+    }
+
+    public BigInteger getIdUsuario() {
+        return idUsuario;
+    }
+
+
+    public double saldo(){
         //TODO - verificar melhor maneira para realizar de forma mais performatica
         Double saldo = 0.0;
         for(Acao acao : historicoDeAcoes){

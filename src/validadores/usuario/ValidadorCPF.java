@@ -1,4 +1,4 @@
-package validadores.Impl;
+package validadores.usuario;
 
 public class ValidadorCPF {
 }

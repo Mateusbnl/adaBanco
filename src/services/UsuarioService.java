@@ -1,20 +1,42 @@
 package services;
 
+import conta.Conta;
+import conta.impl.ContaCorrenteImpl;
 import enums.ClassificaoEnum;
 import usuario.Usuario;
 import usuario.impl.UsuarioPF;
 import usuario.impl.UsuarioPJ;
 
 import java.math.BigInteger;
+import java.util.Random;
 
 public class UsuarioService {
     //TODO - retirar id, provisorio para testes e na proxima evolucao retirar
     //TODO - TALVEZ criar factory para criacao de Usuarios
-    static Usuario criarUsuarioPF(BigInteger idUsuario, ClassificaoEnum classificacao, String nome){
-        return new UsuarioPF(idUsuario,classificacao,nome);
+    public static Usuario criarUsuario(BigInteger idUsuario, ClassificaoEnum classificacao, String nome){
+        Usuario novoUsuario;
+        Conta contaCorrente;
+        if(classificacao.equals(ClassificaoEnum.PF)){
+            contaCorrente = ContaService.criarContaCorrente(1,idUsuario);
+            novoUsuario = new UsuarioPF(idUsuario,classificacao,nome);
+            novoUsuario.addConta(contaCorrente);
+            return novoUsuario;
+        }
+        if(classificacao.equals(ClassificaoEnum.PJ)){
+            contaCorrente = ContaService.criarContaCorrente(1,idUsuario);
+            novoUsuario = new UsuarioPJ(idUsuario,classificacao,nome);
+            novoUsuario.addConta(contaCorrente);
+            return novoUsuario;
+        }
+        return null;
     }
 
-    static Usuario criarUsuarioPJ(BigInteger idUsuario, ClassificaoEnum classificacao, String nome){
-        return new UsuarioPJ(idUsuario,classificacao,nome);
+    public static Conta retornaContaDeUsuarioPorId(Usuario usuario, int idConta){
+        for(Conta conta: usuario.getContas()){
+            if(conta.getId() == idConta){
+                return conta;
+            }
+        };
+        return null;
     }
 }
