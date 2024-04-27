@@ -1,5 +1,5 @@
-package console;
-
+import batch.ImportarClientesCsv;
+import batch.DTO.UsuarioDTO;
 import enums.ClassificacaoEnum;
 import services.CreditoService;
 import services.DebitoService;
@@ -7,6 +7,7 @@ import services.InvestimentoService;
 import services.UsuarioService;
 import usuario.Usuario;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +15,21 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args){
+        testarImportacao();
+    }
+
+    static void testarImportacao(){
+        ImportarClientesCsv novaImportacao = new ImportarClientesCsv();
+        try {
+            List<UsuarioDTO> listaDTO = novaImportacao.listarClientes();
+            List<Usuario> usuariosCriados = novaImportacao.criarClientes(listaDTO);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    static void teste1(){
         //Cria usuario e Conta Corrente conforme regra de negocio
         Usuario usuario = UsuarioService.criarUsuario(BigInteger.valueOf(81970418000120L), ClassificacaoEnum.PJ,"Mateus LTDA");
         Usuario usuario2 = UsuarioService.criarUsuario(BigInteger.valueOf(12345678911L), ClassificacaoEnum.PF,"Marcio Greyck");
@@ -60,6 +76,6 @@ public class Main {
         //Saldos Conta Investimento
         System.out.println("Saldo da nova Conta do "+ usuario.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario,2).saldo());
         System.out.println("Saldo da nova Conta do "+ usuario2.getNome() + ": "+ UsuarioService.retornaContaDeUsuarioPorId(usuario2,2).saldo());
-
     }
 }
+
