@@ -21,9 +21,10 @@ public class Main {
     static void testarImportacao(){
         ImportarClientesCsv novaImportacao = new ImportarClientesCsv();
         try {
+            Usuario usuarioMarketing = UsuarioService.criarUsuario(new BigInteger("99999999999999"),ClassificacaoEnum.PJ,"Conta do Marketing");
+            CreditoService.realizarCredito(usuarioMarketing.getContas().get(0),99999999999.00,usuarioMarketing,usuarioMarketing,"Campanha");
             List<UsuarioDTO> listaDTO = novaImportacao.listarClientes();
-            List<Usuario> usuariosCriados = novaImportacao.criarClientes(listaDTO);
-
+            List<Usuario> usuariosCriados = novaImportacao.criarClientes(listaDTO,usuarioMarketing);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

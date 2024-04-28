@@ -1,7 +1,10 @@
 package batch;
 
 import batch.DTO.UsuarioDTO;
+import conta.Conta;
 import enums.ClassificacaoEnum;
+import services.CreditoService;
+import services.DebitoService;
 import services.UsuarioService;
 import usuario.Usuario;
 
@@ -40,21 +43,26 @@ public class ImportarClientesCsv {
         return usuarios;
     }
 
-    public List<Usuario> criarClientes(List<UsuarioDTO> usuariosDTO) throws IOException {
+    public List<Usuario> criarClientes(List<UsuarioDTO> usuariosDTO, Usuario usuarioMarketing) throws IOException {
         List<Usuario> listaCriados = new ArrayList<>();
         usuariosDTO.
                 stream().
-                parallel().
                 forEach(n -> {
             if(n.tipo() == 2 && (YEARS.between(n.data(),LocalDate.now()) >= 18)){
-                listaCriados.add(UsuarioService.criarUsuario(n.documento(),ClassificacaoEnum.PF,n.nome()));
+                Usuario u = UsuarioService.criarUsuario(n.documento(),ClassificacaoEnum.PF,n.nome());
+                DebitoService.realizarDebitoTransferencia(u.getContas().get(0),usuarioMarketing.getContas().get(0),50.00,usuarioMarketing,u);
+                listaCriados.add(u);
             } else {
-                listaCriados.add(UsuarioService.criarUsuario(n.documento(),ClassificacaoEnum.PJ,n.nome()));
+                Usuario u = UsuarioService.criarUsuario(n.documento(),ClassificacaoEnum.PF,n.nome());
+                DebitoService.realizarDebitoTransferencia(u.getContas().get(0),usuarioMarketing.getContas().get(0),50.00,usuarioMarketing,u);
+                listaCriados.add(u);
             }
         });
-
-
         return listaCriados;
+    }
+
+    public void gerarCsvContasCriadas(List<Usuario> usuariosComContas){
+
     }
 
 }
