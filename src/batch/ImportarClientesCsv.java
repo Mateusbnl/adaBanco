@@ -8,7 +8,9 @@ import services.DebitoService;
 import services.UsuarioService;
 import usuario.Usuario;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,12 +21,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.time.temporal.ChronoUnit.YEARS;
 
 public class ImportarClientesCsv {
     final Path path = Paths.get("C:\\docs\\pessoas.csv");
+    final Path pathCriados = Paths.get("C:\\docs\\resultado.csv");
     final Pattern pattern = Pattern.compile(",");
     final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -61,9 +65,32 @@ public class ImportarClientesCsv {
         return listaCriados;
     }
 
-    public void gerarCsvContasCriadas(List<Usuario> usuariosComContas){
-
+    public void gerarCsvContasCriadas(List<Usuario> usuariosComContas) throws IOException{
+        List<String[]> dataLines = new ArrayList<>();
+        usuariosComContas.stream().forEach(n -> dataLines.add(linhaClienteCriado(n)));
+        File csvOutputFile = new File("C:\\docs\\resultado-"+LocalDate.now()+".csv");
+        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+            dataLines.stream()
+                    .map(this::convertToCSV)
+                    .forEach(pw::println);
+        }
     }
+
+    public String[] linhaClienteCriado(Usuario u){
+        String[] linha = new String[5];
+        linha[0] = u.getNome();
+        linha[1] = String.valueOf(u.getId());
+        linha[2] = u.getClassificacao().toString();
+        linha[3] = String.valueOf(u.getContas().get(0).getId());
+        linha[4] = String.valueOf(u.getContas().get(0).saldo());
+        return linha;
+    }
+
+    public String convertToCSV(String[] data) {
+        return Stream.of(data)
+                .collect(Collectors.joining(","));
+    }
+
 
 }
 

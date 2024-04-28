@@ -19,4 +19,5 @@ public enum ClassificacaoEnum {
         return this.taxaTarifaDebito;
     }
 
+
 }

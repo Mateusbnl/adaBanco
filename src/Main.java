@@ -25,6 +25,7 @@ public class Main {
             CreditoService.realizarCredito(usuarioMarketing.getContas().get(0),99999999999.00,usuarioMarketing,usuarioMarketing,"Campanha");
             List<UsuarioDTO> listaDTO = novaImportacao.listarClientes();
             List<Usuario> usuariosCriados = novaImportacao.criarClientes(listaDTO,usuarioMarketing);
+            novaImportacao.gerarCsvContasCriadas(usuariosCriados);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
